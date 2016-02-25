@@ -1,0 +1,26 @@
+aws_ec2:
+  keypair_name: AN_AWS_KEYPAIR_NAME
+  instance_size: DEFAULT_INSTANCE_SIZE
+  ami_id: AN_AMI_ID
+  security_group: A_SECURITY_GROUP_SERVERS_SHOULD_USE
+  region: A_REGION_TO_LAUNCH_SERVERS_INTO
+  subnet_id: A_SUBNET_TO_LAUNCH_SERVERS_INTO
+  assign_public_ip: SHOULD_ALMOST_ALWAYS_BE_TRUE
+
+cloudflare:
+  email: YOUR_CLOUDFLARE_USERNAME
+  token: YOUR_CLOUDFLARE_TOKEN
+  domain: YOUR_TRAINING_ROOT_DOMAIN
+
+instructor:
+  subdomain: SUBDOMAIN_FOR_CENTRAL_SERVER
+
+users:
+  - name: USERNAME
+    real_name: REAL NAME
+    state: present
+    keys:
+      - state: present
+        key: A_SSH_KEY
+      - state: present
+        key: ANOTHER_SSH_KEY

@@ -1,0 +1,20 @@
+-
+  hosts: tag_learn_deployment_True
+  sudo: yes
+  tasks:
+    - name: Add workshop user to the host
+      user:
+        name: "workshop"
+        force: yes
+        remove: yes
+        password: "$1$fJshsXX3$oaKRr9ZtEkLTX/AurZL/T1"
+        state: present
+        shell: "/bin/bash"
+        groups: "sudo"
+
+    - name: Add workshop user public key
+      authorized_key:
+        user: "workshop"
+        key: "{{ lookup('file', 'files/workshop_publickey.pem') }}"
+        state: present
+        exclusive: yes

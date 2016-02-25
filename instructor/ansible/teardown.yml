@@ -1,0 +1,23 @@
+- hosts: tag_learn_deployment_True
+  gather_facts: True
+  connection: local
+  tasks:
+    - name: Gather EC2 facts
+      local_action: ec2_facts
+
+    - name: Terminate instances
+      ec2:
+        state: 'absent'
+        instance_ids: "{{ ec2_id }}"
+        region: "{{aws_ec2.region}}"
+        wait: true
+
+    - name: Remove DNS record for user's server
+      cloudflare_domain: >
+        state=absent
+        name={{ec2_tag_subdomain}}
+        zone={{ec2_tag_zone}}
+        type=A
+        content={{ec2_ip_address}}
+        email={{cloudflare.email}}
+        token={{cloudflare.token}}

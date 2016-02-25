@@ -1,0 +1,44 @@
+-
+  hosts: all
+  connection: local
+  tasks:
+    - name: launch ec2 instances for each user
+      ec2:
+        key_name: "{{aws_ec2.keypair_name}}"
+        instance_type: "{{aws_ec2.instance_size}}"
+        image: "{{aws_ec2.ami_id}}"
+        wait: true
+        group: "{{aws_ec2.security_group}}"
+        assign_public_ip: "{{aws_ec2.assign_public_ip}}"
+        region: "{{aws_ec2.region}}"
+        vpc_subnet_id: "{{aws_ec2.subnet_id}}"
+        count: "{{users|length}}"
+        instance_tags:
+          learn_deployment: true
+          learn_deployment_student: true
+      register: student_ec2
+
+    - name: Create DNS record for user's server
+      cloudflare_domain: >
+        state=present
+        name={{item.1.name}}
+        zone={{cloudflare.domain}}
+        type=A
+        content={{item.0.public_ip}}
+        email={{cloudflare.email}}
+        token={{cloudflare.token}}
+      with_together:
+        - "{{student_ec2.instances}}"
+        - "{{users}}"
+
+    - name: Tag each server with their specific user name
+      ec2_tag: resource={{item.0.id}} region={{aws_ec2.region}} state=present
+      args:
+        tags:
+          Name: "{{item.1.name}}"
+          username: "{{item.1.name}}"
+          subdomain: "{{item.1.name}}"
+          zone: "{{cloudflare.domain}}"
+      with_together:
+        - "{{student_ec2.instances}}"
+        - "{{users}}"

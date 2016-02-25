@@ -1,0 +1,19 @@
+# copy your public key into the `workshop` user's home directory
+scp -i privatekey.pem ~/.ssh/id_rsa.pub workshop@<username>.learndeployment.com:~/
+
+# ssh into the server
+ssh -i privatekey.pem workshop@<username>.learndeployment.com
+  # create a user
+  sudo adduser --disable-password <username>
+  # add a .ssh folder for the new username
+  sudo mkdir ~<username>/.ssh
+  # put the public key in the .ssh folder under authorized_keys
+  sudo mv id_rsa.pub ~<username>/.ssh/authorized_keys
+  # ensure permissions and ownership are correct
+  sudo chown -R <username>:<username> ~<username>/.ssh
+  sudo chmod 700 ~<username>/.ssh
+  sudo chmod 600 ~<username>/.ssh/authorized_keys
+  exit
+
+# try to connect as yourself
+ssh <username>.learndeployment.com

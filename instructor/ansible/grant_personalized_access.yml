@@ -1,0 +1,49 @@
+-
+  hosts: tag_learn_deployment_True
+  sudo: yes
+  handlers:
+    - name: restart sshd
+      service: name=sshd state=restarted
+  tasks:
+    - name: ensure users are synced
+      user:
+        name: "{{item.name}}"
+        force: yes
+        remove: yes
+        password: "{{ item.shadow_pass | default('$1$fJshsXX3$oaKRr9ZtEkLTX/AurZL/T1') }}"
+        state: "{{ item.state | default(omit) }}"
+        shell: "{{ item.shell | default('/bin/bash') }}"
+        groups: "{{ item.groups | default('sudo') }}"
+      with_items: users
+      when: not {{ec2_tag_learn_deployment_student}} or ec2_tag_username == item.name
+
+    - name: sync all users keys
+      authorized_key: user={{item.0.name}} key="{{item.1.key}}" state={{item.1.state}}
+      with_subelements:
+        - users
+        - keys
+      when: not {{ec2_tag_learn_deployment_student}} or ec2_tag_username == item.0.name
+
+    - name: disallow password authentication
+      lineinfile:
+        dest: /etc/ssh/sshd_config
+        state: present
+        regexp: "^PasswordAuthentication"
+        line: "PasswordAuthentication no"
+      notify: restart sshd
+
+    - name: disallow challenge response authentication
+      lineinfile:
+        dest: /etc/ssh/sshd_config
+        state: present
+        regexp: "^ChallengeResponseAuthentication"
+        line: "ChallengeResponseAuthentication no"
+      notify: restart sshd
+
+    - name: disallow passwordless sudo for users in group sudo
+      lineinfile:
+        dest: /etc/sudoers
+        state: present
+        regexp: "^%sudo"
+        line: "%sudo	ALL=(ALL:ALL) PASSWD:ALL"
+        validate: "visudo -cf %s"

@@ -1,0 +1,2 @@
+chmod 400 privatekey.pem
+ssh -i privatekey.pem workshop@workshop.learndeployment.com

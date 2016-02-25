@@ -1,0 +1,22 @@
+{
+  "name": "learn-ssh",
+  "description": "Explore the fundamentals of SSH (secure shell), a cryptographic protocol used to communicate with and control servers on the internet.",
+  "version": "0.1.0",
+  "license": "MIT",
+  "repository": "bocoup/learn-ssh",
+  "author": "Tyler Kellen & Matt Surabian <hello@bocoup.com> (http://bocoup.com/)",
+  "bin": {
+    "learn-ssh": "cli"
+  },
+  "scripts": {
+    "start": "node cli"
+  },
+  "main": "cli",
+  "dependencies": {
+    "marked": "^0.3.3",
+    "marked-terminal": "^1.5.0",
+    "ramda": "^0.14.0",
+    "terminal-menu": "^2.1.1",
+    "wrench": "^1.5.8"
+  }
+}
