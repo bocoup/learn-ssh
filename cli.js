@@ -19,14 +19,14 @@ const theme = {
   logo: path.join(__dirname, 'theme', 'logo.gif')
 };
 const exercises = [
-  'asymmetric-cryptography',
   'ssh-basics',
+  'asymmetric-cryptography',
   'authorized-keys',
   'known-hosts',
   'ssh-key-passphrases',
   'ssh-agent',
-  'permission-elevation',
-  'your-server'
+  'your-server',
+  'permission-elevation'
 ];
 const exercisesDir = path.join(__dirname, 'exercises');
 const template = `
