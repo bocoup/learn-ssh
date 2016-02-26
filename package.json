@@ -6,7 +6,7 @@
   "repository": "bocoup/learn-ssh",
   "author": "Tyler Kellen & Matt Surabian <hello@bocoup.com> (http://bocoup.com/)",
   "bin": {
-    "learn-ssh": "cli"
+    "learn-ssh": "cli.js"
   },
   "scripts": {
     "start": "node cli"
