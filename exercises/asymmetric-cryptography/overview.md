@@ -16,19 +16,21 @@ cryptography looks like this:
 4. Bob uses his private key to decrypt the ciphertext, revealing the message.
 ```
 
-A more visual metaphor for this transaction is thinking of the public key like an 
-unbreakable padlock that you give out to anyone you want to be able to securely 
-communicate with you. Folks are able to lock a box containing a message with this 
-padlock and only the person who holds the key to the lock is able to open the box 
-and read the message inside. While this is a great way to prevent third parties 
-from learning what is in the locked metaphorical box, there's no way to really know 
-who authored the message and locked the box, since the assumption is that you'd give 
-out the same padlock to anyone who wanted to securely communicate with you.
+A more visual metaphor for this transaction is thinking of the public key like
+an unbreakable padlock. You give this padlock to anyone who you want to securely
+communicate with. The sender can then lock a box containing a message using this
+padlock. Only the person with the key can open the box and read the message.
 
-In order for Bob to securely identify the message's author Alice would have to provide 
-what is known as a cryptographic signature along with her encrypted message. It's 
-important to note that a cryptographic signature is not something that is decrypted, 
-instead it is validated (pass/fail).
+This is a great way to prevent third parties from learning what is in a locked
+metaphorical box. There is a problem here, though. We have no way of knowing who
+authored the message! Your padlock is publicly available and anyone can use it.
+
+In order for Bob to securely identify Alice as the sender, she would have to
+provide what is known as as a cryptographic signature. These signatures are
+never decrypted, they are only validated. You cannot look at a signature and
+know who "wrote" it, you can only ask the signature, "did this specific person
+send you?". If someone you don't know sends you a signature, you'll never be
+able to validate it.
 
 Here's how that same scenario would unfold using cryptographic signatures.
 
