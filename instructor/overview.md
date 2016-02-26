@@ -39,10 +39,6 @@ AWS API and dynamic inventory are up to date.
 ansible-playbook -i inventory/ec2.py -u ubuntu --private-key <PATH_TO_ADMIN_KEY> create_workshop_user.yml
 ```
 
-## asymmetric-cryptography
-
-The instructor will explain asymmetric cryptography.
-
 ## ssh-basics
 
 The exercise folder contains a private key which can be used to connect to
@@ -63,6 +59,10 @@ ansible-playbook -i inventory/ec2.py -l tag_learn_deployment_student_False -u ub
 A few seconds later, everyone in the room has
 access to the machine. Cool! Once everyone is logged in, move to the next
 exercise.
+
+## asymmetric-cryptography
+
+The instructor will explain asymmetric cryptography.
 
 ## authorized-keys
 
@@ -125,11 +125,6 @@ The `-A` flag must be specified with SSH to enable this. We should also cover
 how to configure `~/.ssh/config` to enable this for specific domains/machines
 etc.
 
-## permissions-elevation
-
-Attendees will learn how to use sudo and su, the difference between them, and
-how to manage sudoers.
-
 ## your-server
 
 Attendees will each be given a `username.learndeployment.com` domain that
@@ -146,6 +141,11 @@ box by filtering the ec2 dynamic inventory and running the personalized access p
 ```
 ansible-playbook -i inventory/ec2.py -l tag_username_<USERNAME> -u ubuntu --private-key <PATH_TO_ADMIN_KEY> grant_personalized_access.yml
 ```
+
+## permissions-elevation
+
+Attendees will learn how to use sudo and su, the difference between them, and
+how to manage sudoers.
 
 Finally, the existence of http://github.com/username.keys will be pointed out as
 a matter of convenience.
