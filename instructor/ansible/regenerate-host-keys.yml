@@ -1,0 +1,9 @@
+-
+  hosts: tag_learn_deployment_True
+  become: yes
+  tasks:
+    - name: Remove existing host keys
+      shell: rm /etc/ssh/ssh_host_*
+
+    - name: Regenerate keys
+      command: dpkg-reconfigure openssh-server

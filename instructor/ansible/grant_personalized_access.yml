@@ -1,6 +1,6 @@
 -
   hosts: tag_learn_deployment_True
-  sudo: yes
+  become: yes
   handlers:
     - name: restart sshd
       service: name=sshd state=restarted

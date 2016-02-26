@@ -1,6 +1,6 @@
 -
   hosts: tag_learn_deployment_True
-  sudo: yes
+  become: yes
   tasks:
     - name: Add workshop user to the host
       user:
