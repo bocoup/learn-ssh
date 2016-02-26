@@ -1,18 +1,27 @@
-# Instructor Notes
+# Preparation
 
-At least one day prior to the workshop, attendees must provide the public half
-of their public/private keypair, and the username of their machine. This public
-key should also be registered with github.
+Before the workshop the instructor should make sure they have a profile called `bocoup`
+in their `~/.aws/credentials` file. They should also copy the `learn-deployment.pem` key
+from Lastpass to `~/.ssh` and ensure it has the correct permissions 
+`chmod 400 ~/.ssh/learn-deployment.pem`. 
 
-If attendees do not have a public/private keypair, they can follow this guide
-to create one:
-https://help.github.com/articles/generating-ssh-keys/
+The remote server can be setup using the commands:
 
-The instructor should prepare the ansible configuration in this folder to grant
-all attendees access to `workshop.learndeployment.com`. This should **NOT** be
-run before the first exercise begins.
+```
+AWS_PROFILE=bocoup ansible-playbook -i localhost, instructor_setup.yml
+AWS_PROFILE=bocoup ansible-playbook --private-key=~/.ssh/learn-deployment.pem -u ubuntu -i inventory/ec2.py create_workshop_user.yml
+```
 
-The workshop opens by having everyone `npm install -g tkellen/learn-deployment`.
+Optionally, the instructors can create additional users by modifying the `group_vars/all.yml`
+file in the `ansible` directory and give them access to the server by running:
+
+```
+AWS_PROFILE=bocoup ansible-playbook --private-key=~/.ssh/learn-deployment.pem -u ubuntu -i inventory/ec2.py grant_personalized_access.yml
+```
+
+# Introduction
+
+The workshop opens by having everyone `npm install -g bocoup/learn-ssh`.
 The instructor's terminal should be visible to the workshop as he or she demos
 how to use the tool. Each time an exercise is selected, some files will be
 copied to the current directory under a folder matching the exercise name.
@@ -22,22 +31,7 @@ as well as sample configuration files and solutions where applicable.
 
 The instructor will begin each section by using the overview file as a guide to
 explain the new concept. After fielding any questions, attendees will then run
-`learn-deployment` on their own machine to begin development.
-
-The instructor should now setup the student and instructor servers:
-
-```
-ansible-playbook -i localhost, instructor_setup.yml
-ansible-playbook -i localhost, student_setup.yml
-```
-
-Grant student access to all the servers by creating the `workshop` user on all
-machines. You might have to wait a few seconds after the first two commands so the
-AWS API and dynamic inventory are up to date.
-
-```
-ansible-playbook -i inventory/ec2.py -u ubuntu --private-key <PATH_TO_ADMIN_KEY> create_workshop_user.yml
-```
+`learn-ssh` on their own machine to begin development.
 
 ## ssh-basics
 
@@ -49,16 +43,7 @@ first correct this before they can connect (chmod 400, owner read only).
 Once all attendees have successfully connected, everyone should log off and
 try to connect as themselves. This will fail.
 
-Then, the instructor will tell the attendees to wait a moment as they run a
-playbook to give everyone personalized access.
-
-```
-ansible-playbook -i inventory/ec2.py -l tag_learn_deployment_student_False -u ubuntu --private-key <PATH_TO_ADMIN_KEY> grant_personalized_access.yml
-```
-
-A few seconds later, everyone in the room has
-access to the machine. Cool! Once everyone is logged in, move to the next
-exercise.
+We'll explore why that is in the next few exercises.
 
 ## asymmetric-cryptography
 
@@ -66,38 +51,33 @@ The instructor will explain asymmetric cryptography.
 
 ## authorized-keys
 
-Attendees should be connected to `workshop.learndeployment.com` as their own
-user.
+Attendees should be connected to `workshop.learndeployment.com` as the
+workshop user. The instructor will show the `authorized_keys` file on the screen
+and talk about how it got there (pre-class prep).
 
-Because each attendee provided their public key before the workshop, the
-instructor can now point out that it is listed in `~/.ssh/authorized_keys`.
+Then the instructor will modify the `authorized_keys` and show how everyone is still
+logged in and explain how once the server has authorized your session it does not
+continue to authorize you; when you're in you're in. The students should then `exit`
+their existing ssh session and try to reconnect, this will fail.
 
-Attendees are encouraged to edit this file, log off, and try to log in again.
-Once everyone is satisfied they understand how this works, the instructor can
-run their setup playbook again, renewing access for everyone.
+After this the instructor should ensure a stable server state by re-running:
+
+```
+AWS_PROFILE=bocoup ansible-playbook --private-key=~/.ssh/learn-deployment.pem -u ubuntu -i inventory/ec2.py create_workshop_user.yml
+```
+Everyone should then try to SSH again, and it will pass. Students should `exit` this 
+session before starting the next exercise.
 
 ## known-hosts
 
-Everyone should be able to SSH to `workshop.learndeployment.com` as their own
-user before this exercise begins.
-
-To illustrate what a MiTM attack might look like, the instructor will switch EC2
-instances for `workshop.learndeployment.com`:
+To illustrate what a MiTM attack might look like, the instructor will regenerate the 
+host keys on the remote server using the command:
 
 ```
-ansible-playbook -i inventory/ec2.py -l tag_learn_deployment_student_False teardown.yml
-ansible-playbook -i localhost, instructor_setup.yml
+AWS_PROFILE=bocoup ansible-playbook --private-key=~/.ssh/learn-deployment.pem -u ubuntu -i inventory/ec2.py regenerate-host-keys.yml
 ```
 
-Some time should pass before running these as the API calls for dynamic inventory do
-not update immediately and these tasks will fail if called before everything is up to date.
-
-```
-ansible-playbook -i inventory/ec2.py -l tag_learn_deployment_student_False -u ubuntu --private-key <PATH_TO_ADMIN_KEY> create_workshop_user.yml
-ansible-playbook -i inventory/ec2.py -l tag_learn_deployment_student_False -u ubuntu --private-key <PATH_TO_ADMIN_KEY> grant_personalized_access.yml
-```
-
-Attendees will then SSH to the server. This will trigger a warning.
+Attendees will then attempt to SSH to the server. This will trigger a warning.
 
 The instructor will then explain how to fix this problem using `ssh-keygen`,
 with an emphasis that the veracity of the server should be verified before this
@@ -127,20 +107,6 @@ etc.
 
 ## your-server
 
-Attendees will each be given a `username.learndeployment.com` domain that
-points to a server of their own. They will then be instructed to connect using
-the provided private key, and to create a user for themselves that supports
-public key auth.
-
-If this goes quickly, attendees will be encouraged to make accounts for other
-users in the workshop.
-
-In the event a user needs assistance their username can be automatically created on the
-box by filtering the ec2 dynamic inventory and running the personalized access playbook.
-
-```
-ansible-playbook -i inventory/ec2.py -l tag_username_<USERNAME> -u ubuntu --private-key <PATH_TO_ADMIN_KEY> grant_personalized_access.yml
-```
 
 ## permissions-elevation
 
