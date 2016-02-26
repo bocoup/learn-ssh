@@ -16,13 +16,21 @@ cryptography looks like this:
 4. Bob uses his private key to decrypt the ciphertext, revealing the message.
 ```
 
-While this method of exchanging messages effectively prevents third parties
-from eavesdropping, Bob has no way of knowing who authored the messages he
-has received (any number of people may have access to his public key). One
-solution for this problem is to use a cryptographic signature.
+A more visual metaphor for this transaction is thinking of the public key like an 
+unbreakable padlock that you give out to anyone you want to be able to securely 
+communicate with you. Folks are able to lock a box containing a message with this 
+padlock and only the person who holds the key to the lock is able to open the box 
+and read the message inside. While this is a great way to prevent third parties 
+from learning what is in the locked metaphorical box, there's no way to really know 
+who authored the message and locked the box, since the assumption is that you'd give 
+out the same padlock to anyone who wanted to securely communicate with you.
 
-Before showing how this works, it's important to note that a cryptographic
-signature is not meant to be decrypted. It can only be validated (pass/fail).
+In order for Bob to securely identify the message's author Alice would have to provide 
+what is known as a cryptographic signature along with her encrypted message. It's 
+important to note that a cryptographic signature is not something that is decrypted, 
+instead it is validated (pass/fail).
+
+Here's how that same scenario would unfold using cryptographic signatures.
 
 ```
 1. Both Bob and Alice generate a public/private keypair.
@@ -41,9 +49,7 @@ signature is not meant to be decrypted. It can only be validated (pass/fail).
    decrypting the message using his private key.
 ```
 
-The assumption in asymmetric cryptography is that possession of the private key
-is proof of identity. Keep your private key secure, or anyone can pretend to be
-you!
+#### The assumption in asymmetric cryptography is that possession of the private key is proof of identity. Keep your private key secure, or anyone can pretend to be you!
 
 ## EXERCISE
 
