@@ -57,6 +57,7 @@ const template = `
         padding: 0 .25em;
         background-color: #444;
         border-radius: 3px;
+        font-size: 0.90em;
       }
       </style>
       {{{head}}}
