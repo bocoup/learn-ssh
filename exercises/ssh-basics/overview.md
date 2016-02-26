@@ -14,8 +14,8 @@ This is known as a cryptographic challenge.
 In SSHv2, the user sends a cryptographic signature that the server validates
 prior to granting access.
 
-In both cases, the result is the same: the server assumes that possession of
-the private key is proof of identity.
+In both cases, the result is the same: *the server assumes that possession of
+the private key is proof of identity*.
 
 If you're curious how the server is able to do this, check out the next section
 which covers the `authorized_keys` file.
@@ -39,14 +39,24 @@ chmod <mode> <filename>
 
 ### SPECIFYING A USER
 
-When connecting to a remote machine, SSH will attempt to connect as the current
-user on the machine. You can see the current user by running `echo $USER` or
-`whoami`. Assuming the current user is `alice`, the following three commands are
-interchangeable:
+When connecting to a remote machine, SSH will attempt to connect with the
+username of the host machine's currently logged in user. You can see the
+username of the currently logged in user by running `echo $USER` or `whoami`
+in your terminal. Assuming the current user is `alice`, the following three
+commands are equivalent:
 
+*Default Behavior (will use alice as the username)*:
 ```
 ssh workshop.learndeployment.com
+```
+
+*Username Explicitly Provided with @*:
+```
 ssh alice@workshop.learndeployment.com
+```
+
+*Username Explicitly Provided with CLI flag*:
+```
 ssh -l alice workshop.learndeployment.com
 ```
 
@@ -67,9 +77,9 @@ ssh -i /path/to/key workshop.learndeployment.com
 
 ## EXERCISE
 
-This exercise comes with a private key. Use it in conjunction with the `ssh`
-command to connect to the server running at `workshop.learndeployment.com`.
-You will need to connect as the user `workshop`.
+This exercise comes with a private key called `privatekey.pem`. Use it in
+conjunction with the `ssh` command to connect with the username `workshop` to
+the server running at `workshop.learndeployment.com`.
 
 ## LEARNING OBJECTIVES
 
