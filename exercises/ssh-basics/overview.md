@@ -77,7 +77,7 @@ ssh -i /path/to/key workshop.learndeployment.com
 
 ## EXERCISE
 
-This exercise comes with a private key called `privatekey.pem`. Use it in
+This exercise comes with a private key file named `privatekey.pem`. Use it in
 conjunction with the `ssh` command to connect with the username `workshop` to
 the server running at `workshop.learndeployment.com`.
 
