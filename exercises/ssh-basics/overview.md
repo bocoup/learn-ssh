@@ -4,9 +4,9 @@ SSH is a protocol which facilitates the creation of a secure text-based shell
 connection between machines. While many developers use SSH every day, the
 particulars of what's happening under the hood are often overlooked.
 
-### HOW SSH USES YOUR KEYS
+### HOW SSH USES YOUR PUBLIC AND PRIVATE KEYS
 
-In SSHv1, the basic form of asymmetric cryptography is used. During connection,
+In SSHv1, a basic form of asymmetric cryptography is used. During connection,
 the server encrypts a message for the user and it's expected that the user's
 machine is capable of decrypting it and responding with the correct plain text.
 This is known as a cryptographic challenge.
@@ -15,10 +15,9 @@ In SSHv2, the user sends a cryptographic signature that the server validates
 prior to granting access.
 
 In both cases, the result is the same: *the server assumes that possession of
-the private key is proof of identity*.
+a private key is proof of identity*.
 
-If you're curious how the server is able to do this, check out the next section
-which covers the `authorized_keys` file.
+Both of these scenarios will be explained in detail during the next exercise.
 
 ### PERMISSIONS
 
