@@ -53,6 +53,11 @@ const template = `
         text-decoration: none;
       }
       .exercise { padding: .5em 0em; }
+      code {
+        padding: 0 .25em;
+        background-color: #444;
+        border-radius: 3px;
+      }
       </style>
       {{{head}}}
     </head>
