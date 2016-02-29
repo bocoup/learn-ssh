@@ -32,5 +32,5 @@ and provides other highly-desirable features for managing private keys.
 ## LEARNING OBJECTIVES
 
 - Why is a SSH key passphrase desirable?
-- How do you add a passphrase to a private key lacking one?
+- How do you add a passphrase to a private key?
 - What tool can be used to manage private keys?
