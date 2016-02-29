@@ -2,8 +2,8 @@
 
 Before the workshop the instructor should make sure they have a profile called `bocoup`
 in their `~/.aws/credentials` file. They should also copy the `learn-deployment.pem` key
-from Lastpass to `~/.ssh` and ensure it has the correct permissions 
-`chmod 400 ~/.ssh/learn-deployment.pem`. 
+from Lastpass to `~/.ssh` and ensure it has the correct permissions
+`chmod 400 ~/.ssh/learn-deployment.pem`.
 
 The remote server can be setup using the commands:
 
@@ -65,12 +65,12 @@ After this the instructor should ensure a stable server state by re-running:
 ```
 AWS_PROFILE=bocoup ansible-playbook --private-key=~/.ssh/learn-deployment.pem -u ubuntu -i inventory/ec2.py create_workshop_user.yml
 ```
-Everyone should then try to SSH again, and it will pass. Students should `exit` this 
+Everyone should then try to SSH again, and it will pass. Students should `exit` this
 session before starting the next exercise.
 
 ## known-hosts
 
-To illustrate what a MiTM attack might look like, the instructor will regenerate the 
+To illustrate what a MiTM attack might look like, the instructor will regenerate the
 host keys on the remote server using the command:
 
 ```
@@ -88,6 +88,8 @@ is done.
 Attendees will now learn about passphrases, how to add them to their keys if
 they don't have them, and how they are a type of two factor authentication.
 This will lead into dealing with ssh-agent.
+
+The included key in this exercise has a passphrase, which is `learnssh`.
 
 ## ssh-agent
 

@@ -1,3 +1,2 @@
 chmod 400 privatekey.pem
-ssh-keygen -R workshop.learndeployment.com
 ssh -i privatekey.pem workshop@workshop.learndeployment.com
