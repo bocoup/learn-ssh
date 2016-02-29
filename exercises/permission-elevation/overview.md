@@ -42,3 +42,4 @@ tasks `sudo` will likely be sufficient and preferred.
 - Why is logging in as the root user a bad idea?
 - How can an administrator assume the role of any user on the box?
 - How can a regular user execute a single command as an administrator?
+- How do you give your account sudo access?

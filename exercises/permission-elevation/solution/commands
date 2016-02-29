@@ -1,0 +1,4 @@
+sudo su -
+visudo
+# add <username> ALL=(ALL) ALL
+# save
