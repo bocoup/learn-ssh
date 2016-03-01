@@ -33,7 +33,7 @@ The instructor will begin each section by using the overview file as a guide to
 explain the new concept. After fielding any questions, attendees will then run
 `learn-ssh` on their own machine to begin development.
 
-## ssh-basics
+## ssh-basics (15 minutes)
 
 The exercise folder contains a private key which can be used to connect to
 an EC2 instance accessible at `workshop.learndeployment.com` with the
@@ -45,11 +45,11 @@ try to connect as themselves. This will fail.
 
 We'll explore why that is in the next few exercises.
 
-## asymmetric-cryptography
+## asymmetric-cryptography (25 minutes)
 
 The instructor will explain asymmetric cryptography.
 
-## authorized-keys
+## authorized-keys (10 minutes)
 
 Attendees should be connected to `workshop.learndeployment.com` as the
 workshop user. The instructor will show the `authorized_keys` file on the screen
@@ -68,7 +68,7 @@ AWS_PROFILE=bocoup ansible-playbook --private-key=~/.ssh/learn-deployment.pem -u
 Everyone should then try to SSH again, and it will pass. Students should `exit` this
 session before starting the next exercise.
 
-## known-hosts
+## known-hosts (10 minutes)
 
 To illustrate what a MiTM attack might look like, the instructor will regenerate the
 host keys on the remote server using the command:
@@ -83,7 +83,7 @@ The instructor will then explain how to fix this problem using `ssh-keygen`,
 with an emphasis that the veracity of the server should be verified before this
 is done.
 
-## ssh-key-passphrases
+## ssh-key-passphrases (10 minutes)
 
 Attendees will now learn about passphrases, how to add them to their keys if
 they don't have them, and how they are a type of two factor authentication.
@@ -91,7 +91,7 @@ This will lead into dealing with ssh-agent.
 
 The included key in this exercise has a passphrase, which is `learnssh`.
 
-## ssh-agent
+## ssh-agent (10 minutes)
 
 Attendees now understand the basic usage of private keys. We'll now make
 managing them easier to deal with by adding to/listing the keys in our agent.
@@ -107,7 +107,7 @@ The `-A` flag must be specified with SSH to enable this. We should also cover
 how to configure `~/.ssh/config` to enable this for specific domains/machines
 etc.
 
-## your-server
+## your-server (1 hour)
 
 
 ## permissions-elevation
