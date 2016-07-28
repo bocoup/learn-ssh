@@ -3,6 +3,6 @@
 
 ### How do I start?
 
-1. `npm install -g learn-ssh`
+1. `npm install -g bocoup/learn-ssh`
 4. Wait for the workshop to begin.
 5. Run `learn-ssh`!
